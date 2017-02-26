@@ -1,0 +1,32 @@
+C51 COMPILER V7.50   DELAY100US                                                            06/13/2014 14:57:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE DELAY100US
+OBJECT MODULE PLACED IN delay100us.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE delay100us.c BROWSE DEBUG OBJECTEXTEND SRC(.\delay100us.SRC)
+
+line level    source
+
+   1          void delay100us(unsigned char n)
+   2          {
+   3   1      #pragma asm
+   4   1      more:   mov             R3,#48
+   5   1                      djnz    R3,$
+   6   1                      djnz    R7,more
+   7   1      #pragma endasm
+   8   1      }
+*** WARNING C280 IN LINE 1 OF DELAY100US.C: 'n': unreferenced local variable
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     12    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

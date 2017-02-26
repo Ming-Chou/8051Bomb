@@ -1,0 +1,73 @@
+C51 COMPILER V7.50   LCD_SHOW                                                              06/13/2014 14:57:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE LCD_SHOW
+OBJECT MODULE PLACED IN lcd_show.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE lcd_show.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REG51.H>
+   2          #include "lcd.h"
+   3          
+   4          
+   5          void pwd_show (int aaa, int bbb)  
+   6          {
+   7   1        init_LCD();
+   8   1        clear_LCD();
+   9   1      
+  10   1        gotoxy(1,1);
+  11   1        display_LCD_number(aaa);
+  12   1      
+  13   1        gotoxy(1,4);
+  14   1        display_LCD_string("~");
+  15   1      
+  16   1        if(bbb==100)
+  17   1        {
+  18   2          gotoxy(1,6);
+  19   2          display_LCD_number(10);
+  20   2          gotoxy(1,7);
+  21   2          display_LCD_number(00);
+  22   2        }
+  23   1        else
+  24   1        {
+  25   2          gotoxy(1,6);
+  26   2          display_LCD_number(bbb);
+  27   2        }
+  28   1      }
+  29          
+  30          void pwd_success (void)
+  31          {
+  32   1        init_LCD();
+  33   1        clear_LCD();
+  34   1      
+  35   1        gotoxy(1,1);
+  36   1        display_LCD_string("Successful ^^");
+  37   1      }
+  38          
+  39          
+  40          void pwd_fail (void)  
+  41          {
+  42   1        init_LCD();
+  43   1        clear_LCD();
+  44   1      
+  45   1        gotoxy(1,1);
+  46   1        display_LCD_string("*Bomb  Bomb* = =");
+  47   1      }
+  48          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    154    ----
+   CONSTANT SIZE    =     33    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V7.50   LCD_SHOW                                                              06/13/2014 14:57:58 PAGE 2   
+
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

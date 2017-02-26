@@ -1,0 +1,110 @@
+C51 COMPILER V7.50   COUNT                                                                 06/13/2014 14:57:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE COUNT
+OBJECT MODULE PLACED IN count.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE count.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*      標題:           七段倒數 60秒
+   2                  版本:           1.0
+   3                  程式描述:       使用8051 的Port 1連接到四顆七段顯示器，
+   4                                          倒數時間60秒，時間間到則暫停，
+   5                                          這四顆七段顯示器將顯示出 60 到 0。
+   6          */
+   7          
+   8          #include <REG51.H>
+   9          #include "lcd.h"
+  10          #include "lcd_show.h"
+  11          #define TIMER0_COUNT 0xFC18     /* 10000h-((12,000,000/(12*FREQ)) */
+  12          code seven_seg[10] = {0X00, 0X01, 0X02, 0X03, 0X04, 0X05, 0X06, 0X07, 0X08, 0X09};
+  13          code scan[4]={0XE0,0XD0,0xB0,0x70};
+  14          unsigned char counter[4]={0,3,0,0};  // 時間設定
+  15          unsigned char i=0;
+  16          int     timer0_tick;
+  17          static int Control=0;
+  18          
+  19          void T0_int(void) interrupt 1
+  20          {
+  21   1        TR0=0;
+  22   1        TL0=(TIMER0_COUNT & 0x00FF);
+  23   1        TH0=(TIMER0_COUNT >> 8);
+  24   1        TR0=1;
+  25   1      
+  26   1        P0 = seven_seg[counter[i]] | scan[i];
+  27   1        i++;
+  28   1        if(i==4) i=0;
+  29   1        timer0_tick++;
+  30   1        
+  31   1        if(counter[0]==0 && counter[1]==0 && counter[2]==0 &&counter[3]==0) 
+  32   1        {     
+  33   2          Control=1;
+  34   2          //pwd_fail();
+  35   2        }
+  36   1      
+  37   1        if (timer0_tick==1000 && Control==0) {
+  38   2            timer0_tick=0;
+  39   2      /*---------------------時間倒數，七段倒數-----------------------------*/
+  40   2            counter[0]--;                                     
+  41   2            if (counter[0]==-1) {                     
+  42   3                        counter[0]=9;                         
+  43   3                        counter[1]--;                         
+  44   3                        if (counter[1]==-1) {         
+  45   4                            counter[1]=9;                     
+  46   4                                counter[2]--;
+  47   4                                if (counter[2]==-1) { 
+  48   5                                        counter[2]=9;         
+  49   5                                        counter[3]--;                 
+  50   5                                        if(counter[3]==-1) { 
+  51   6                                           counter[3]=9; 
+  52   6                                    }
+  53   5                            }
+  54   4                    }
+  55   3            }
+C51 COMPILER V7.50   COUNT                                                                 06/13/2014 14:57:58 PAGE 2   
+
+  56   2        }  
+  57   1      }
+  58                  
+  59          int ctrl(void)
+  60          {
+  61   1          return Control;
+  62   1      }
+  63                  
+  64          static void timer0_initialize(void)
+  65          {
+  66   1        EA=0;   
+  67   1        timer0_tick=0;
+  68   1        TR0=0;
+  69   1        TMOD &= 0XF0;
+  70   1        TMOD |=0x01;
+  71   1        TL0=(TIMER0_COUNT & 0x00FF);
+  72   1        TH0=(TIMER0_COUNT >> 8);
+  73   1        PT0=0;
+  74   1        ET0=1;
+  75   1        TR0=1;
+  76   1        EA=1;
+  77   1      }
+  78              
+  79          void count (void)  {
+  80   1      
+  81   1        timer0_initialize();
+  82   1        //while (1);                         /* Loop forever */
+  83   1      }
+  84          
+  85          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    223    ----
+   CONSTANT SIZE    =     28    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

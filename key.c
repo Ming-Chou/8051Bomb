@@ -1,0 +1,46 @@
+#include <REG51.H>
+#include "count.h"
+#include "keypad.h"
+#include "lcd.h"
+
+code seven_seg1[11] = {0XE0, 0XE1, 0XE2, 0XE3, 0XE4, 0XE5, 0XE6, 0XE7, 0XE8, 0XE9, 0x00};
+code seven_seg2[11]	= {0XD0, 0XD1, 0XD2, 0XD3, 0XD4, 0XD5, 0XD6, 0XD7, 0XD8, 0XD9, 0x00};
+code seven_seg3[11]	= {0XB0, 0XB1, 0XB2, 0XB3, 0XB4, 0XB5, 0XB6, 0XB7, 0XB8, 0XB9, 0x00};
+code seven_seg4[11]	= {0X70, 0X71, 0X72, 0X73, 0X74, 0X75, 0X76, 0X77, 0X78, 0X79, 0x00};
+int temp,temp2;
+
+void show(int a, int b, int c, int d)
+{
+	temp2 = 50;
+	do
+	{	
+		temp=50;
+		while(temp!=0)
+		{
+			temp--;
+			P0=seven_seg1[a];
+			P0=seven_seg2[b];
+			P0=seven_seg3[c];
+			P0=seven_seg4[d];
+			
+		}
+		temp2--;
+	}while(temp2!=0);
+}
+
+void start_key (void)  
+{
+  show(0,3,0,0);
+  do{
+	show(0,3,0,0);
+  	if(gotkey()==3)//¶}©l
+  	{
+		//P1=0x80;
+  		count();
+		break;
+  	}
+	show(0,3,0,0);
+	P2=0x80;
+  }while(1);
+}
+

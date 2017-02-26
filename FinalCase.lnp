@@ -1,0 +1,9 @@
+"count.obj",
+"FinalCase.obj",
+"key.obj",
+"keypad.obj",
+"delay100us.obj",
+"lcd.obj",
+"lcd_show.obj" 
+TO "FinalCase" 
+RAMSIZE(256) 

@@ -1,0 +1,144 @@
+#include <REG51.H>
+#include "count.h"
+#include "keypad.h"
+#include "key.h"
+#include "lcd.h"
+#include "lcd_show.h"
+#include "delay100us.h"
+#include "stdio.h"
+#include "stdlib.h"
+//#include "time.h"
+
+unsigned char ii=0; //ten
+unsigned char jj=0; //one
+unsigned char innum=0;
+int aa=0;
+int bb=100;
+int a;
+
+int input(void)
+{
+    ii = gotkeys();
+    if(ii==0) ii=1;
+    else if(ii==1) ii=2;
+    else if(ii==2) ii=3;
+    else if(ii==4) ii=4;
+    else if(ii==5) ii=5;
+    else if(ii==6) ii=6;
+    else if(ii==8) ii=7;
+    else if(ii==9) ii=8;
+    else if(ii==10) ii=9;
+    else if(ii==13) ii=0;
+    else ii=0;
+
+    gotoxy(2,10);
+    display_LCD_number(ii);
+
+    jj = gotkeys();
+    if(jj==0) jj=1;
+    else if(jj==1) jj=2;
+    else if(jj==2) jj=3;
+    else if(jj==4) jj=4;
+    else if(jj==5) jj=5;
+    else if(jj==6) jj=6;
+    else if(jj==8) jj=7;
+    else if(jj==9) jj=8;
+    else if(jj==10) jj=9;
+    else if(jj==13) jj=0;
+    else jj=0;
+
+    gotoxy(2,11);
+    display_LCD_number(10*ii+jj);
+    
+    return 10*ii+jj;
+}
+
+void Ultimate(int p,int b)
+{
+	int m=aa,n=bb;
+	//while(p!=b)
+	//{
+
+		if(b>p)
+		{
+			if(b<=n)
+			n=b;
+			if(m==(p-1) && n==(p+1)) //成功條件 
+			{
+                aa = 0;
+                bb = 200;
+			}
+            else
+            {
+                aa = m;
+                bb = n;
+            }
+		}
+		else if(b<p)
+		{
+			if(b>=m)
+			m=b;
+			if(m==p-1 && n==p+1) //成功條件 
+			{
+                aa = 0;
+                bb = 200;
+			}
+            else
+            {
+                aa = m;
+                bb = n;
+            }
+		}
+        else if(b==p)
+        {
+            aa = 0;
+            bb = 404;
+        }
+	//}
+}
+
+void main(void)
+{
+	init_LCD();
+    clear_LCD();
+	gotoxy(1,1);
+    display_LCD_string("Set Key...");
+	a = input();
+    init_LCD();
+    clear_LCD();
+    gotoxy(1,1);
+    display_LCD_string("Ready? Go...");
+    start_key();
+    pwd_show (aa,bb);
+    while(1)
+    {
+        innum = input();
+        Ultimate(a,innum);
+        if(bb==200)
+        {
+            pwd_success();
+            break;
+        }
+        else if(bb==404)
+        {
+            pwd_fail();
+            break;
+        }
+        pwd_show (aa,bb);
+
+        if(ctrl()==1)
+        {
+            pwd_fail();
+            break;
+        }
+        pwd_show (aa,bb);
+    }
+    while(1)
+    {
+        show(10,0,0,0);
+		show(0,10,0,0);
+		show(0,0,10,0);
+		show(0,0,0,10);
+		//timer0_initialize_close();
+    }
+}

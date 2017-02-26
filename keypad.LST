@@ -1,0 +1,151 @@
+C51 COMPILER V7.50   KEYPAD                                                                06/13/2014 14:57:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE KEYPAD
+OBJECT MODULE PLACED IN keypad.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE keypad.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*
+   2                  標題:           小鍵盤的輸入函數
+   3                  Target:     89S51  
+   4                  函數描述:       char gotkey(void)
+   5                                          從4X4小鍵盤輸入資料，傳回0 ~ 15
+   6            
+   7            小鍵盤的連接方式:
+   8             
+   9            1 P20 -----0----1----2----3
+  10                       |    |    |    |
+  11            2 P21 -----4----5----6----7
+  12                       |    |    |    | 
+  13            3 P22 -----8----9----10---11
+  14                       |    |    |    |  
+  15            4 P23 -----12---13---14---15
+  16                       |    |    |    |
+  17            5 P24 ---- |    |    |    |
+  18                       |    |    |    |
+  19            6 P25 ----------     |    |
+  20                                 |    |
+  21            7 P26 ---------------     |   
+  22                                      |
+  23            8 P27 --------------------    
+  24          */
+  25          #include <REG51.H>
+  26          #include "key.h"
+  27          #include "count.h"
+  28          //code char key_code[]={0x7E,0XBE,0XBD,0XBB,0XDE,0XDD,0XDB,0XEE,
+  29          //                     0XED,0XEB,0X7D,0X7B,0XE7,0XD7,0XB7,0X77};
+  30          code char key_code[]={0xEE,0xED,0XEB,0XE7,0XDE,0XDD,0XDB,0XD7,
+  31                          0XBE,0XBD,0XBB,0XB7,0X7E,0X7D,0X7B,0X77};
+  32          code ksp[4]={0x7F,0xBF,0xDF,0xEF};
+  33          
+  34          void delay (void)  {                   /* 時間延遲函數 */
+  35   1        unsigned char i,j;                  
+  36   1              for (i=0;i<5;i++)
+  37   1                      for(j=0;j<10;j++)
+  38   1                      ;
+  39   1      }
+  40          //
+  41          //              4X4小鍵盤輸入           
+  42          //
+  43          char keypad_scan()
+  44          {
+  45   1          char key,i;
+  46   1      
+  47   1          P2=0xF0;
+  48   1              while (P2!=0xF0);
+  49   1            do{
+  50   2                 if(ctrl()==1)
+  51   2                 {
+  52   3                       pwd_fail();
+*** WARNING C206 IN LINE 52 OF KEYPAD.C: 'pwd_fail': missing function-prototype
+  53   3                       return(15);
+  54   3                 }
+C51 COMPILER V7.50   KEYPAD                                                                06/13/2014 14:57:58 PAGE 2   
+
+  55   2             for(i=0;i<=3;i++)
+  56   2             {        
+  57   3                P2=ksp[i];
+  58   3                        show(0,3,0,0);
+  59   3                        if(ctrl()==1)
+  60   3                        {
+  61   4                               pwd_fail();
+  62   4                               return(15);
+  63   4                        }
+  64   3                if(P2!=ksp[i])
+  65   3                {
+  66   4                   delay();
+  67   4                   key=P2;
+  68   4                   if(key!=ksp[i])
+  69   4                               {
+  70   5                                      return(key);
+  71   5                               }
+  72   4                }
+  73   3             }
+  74   2          } while(1);
+  75   1      }
+  76          char keypad_scans()
+  77          {
+  78   1          char key,i;
+  79   1      
+  80   1          P2=0xF0;
+  81   1              while (P2!=0xF0);
+  82   1            do{
+  83   2             for(i=0;i<=3;i++)
+  84   2             {   
+  85   3                        if(ctrl()==1)
+  86   3                        {
+  87   4                               pwd_fail();
+  88   4                               return(15);
+  89   4                        }     
+  90   3                P2=ksp[i];
+  91   3                if(P2!=ksp[i])
+  92   3                {
+  93   4                   delay();
+  94   4                   key=P2;
+  95   4                   if(key!=ksp[i])
+  96   4                               {
+  97   5                                      return(key);
+  98   5                               }
+  99   4                }
+ 100   3             }
+ 101   2          } while(1);
+ 102   1      }
+ 103          // 檢查是否有按鍵按下
+ 104          char gotkey()
+ 105          {
+ 106   1          char temp,i;
+ 107   1          show(0,3,0,0);
+ 108   1              temp=keypad_scan();
+ 109   1              for (i=0;i<=15;i++) {
+ 110   2                  if(temp==key_code[i]) return(i);
+ 111   2              }
+ 112   1              return(16);
+ 113   1      }
+ 114          
+ 115          char gotkeys()
+ 116          {
+C51 COMPILER V7.50   KEYPAD                                                                06/13/2014 14:57:58 PAGE 3   
+
+ 117   1          char temp,i;
+ 118   1              temp=keypad_scans();
+ 119   1              for (i=0;i<=15;i++) {
+ 120   2                  if(temp==key_code[i]) return(i);
+ 121   2              }
+ 122   1              return(16);
+ 123   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    404    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

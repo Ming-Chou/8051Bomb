@@ -1,0 +1,66 @@
+A51 MACRO ASSEMBLER  DELAY100US                                                           06/13/2014 14:57:58 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.10
+OBJECT MODULE PLACED IN delay100us.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE delay100us.src PR(.\delay100us.ls1) EP DEBUG
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; .\delay100us.SRC generated from: delay100us.c
+                       2     ; COMPILER INVOKED BY:
+                       3     ;        C:\Keil\C51\BIN\C51.EXE delay100us.c BROWSE DEBUG OBJECTEXTEND SRC(.\delay100us.SR
+                             C)
+                       4     
+                       5     
+                       6     NAME    DELAY100US
+                       7     
+                       8     ?PR?_delay100us?DELAY100US               SEGMENT CODE 
+                       9     ?DT?_delay100us?DELAY100US               SEGMENT DATA OVERLAYABLE 
+                      10             PUBLIC  _delay100us
+                      11     
+----                  12             RSEG  ?DT?_delay100us?DELAY100US
+0000                  13     ?_delay100us?BYTE:
+0000                  14               n?040:   DS   1
+                      15     ; void delay100us(unsigned char n)
+                      16     
+----                  17             RSEG  ?PR?_delay100us?DELAY100US
+0000                  18     _delay100us:
+                      19                             ; SOURCE LINE # 1
+0000 8F00     F       20             MOV     n?040,R7
+                      21     ; {
+                      22                             ; SOURCE LINE # 2
+                      23     ; #pragma asm
+                      24     ; more: mov             R3,#48
+0002 7B30             25               more: mov             R3,#48
+                      26     ;               djnz    R3,$
+0004 DBFE             27               djnz  R3,$
+                      28     ;               djnz    R7,more
+0006 DFFA             29               djnz  R7,more
+                      30     ; #pragma endasm
+                      31     ; }                     ; SOURCE LINE # 8
+0008 22               32             RET     
+                      33     ; END OF _delay100us
+                      34     
+                      35             END
+A51 MACRO ASSEMBLER  DELAY100US                                                           06/13/2014 14:57:58 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                     T Y P E  V A L U E   ATTRIBUTES
+
+?DT?_DELAY100US?DELAY100US  D SEG    0001H       REL=UNIT
+?PR?_DELAY100US?DELAY100US  C SEG    0009H       REL=UNIT
+?_DELAY100US?BYTE. . . . .  D ADDR   0000H   R   SEG=?DT?_DELAY100US?DELAY100US
+DELAY100US . . . . . . . .  N NUMB   -----       
+MORE . . . . . . . . . . .  C ADDR   0002H   R   SEG=?PR?_DELAY100US?DELAY100US
+N?040. . . . . . . . . . .  D ADDR   0000H   R   SEG=?DT?_DELAY100US?DELAY100US
+_DELAY100US. . . . . . . .  C ADDR   0000H   R   SEG=?PR?_DELAY100US?DELAY100US
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

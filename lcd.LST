@@ -1,0 +1,84 @@
+C51 COMPILER V7.50   LCD                                                                   06/13/2014 14:57:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN lcd.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE lcd.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REG51.H>
+   2          #include <lcd.h>
+   3          
+   4          char code int2charLCD[]="0123456789";
+   5                  
+   6          void write_LCD_command(unsigned command)
+   7          {
+   8   1              rw=WRITE;
+   9   1              rs=COMMAND;
+  10   1              enable=ENABLE;
+  11   1              P1=command;
+  12   1              delay100us(20);
+  13   1              enable=DISABLE;
+  14   1              rw=1;
+  15   1      }
+  16          void write_LCD_data(unsigned LCDdata)
+  17          {
+  18   1              rw=WRITE;
+  19   1              rs=DATA;
+  20   1              enable=ENABLE;
+  21   1              P1=LCDdata;
+  22   1              delay100us(20);
+  23   1              enable=DISABLE;
+  24   1              rw=1;
+  25   1      }
+  26          void init_LCD(void)
+  27          {
+  28   1              write_LCD_command(TwoLine_8bit);// 0x38         
+  29   1              write_LCD_command(CURSOR_OFF);  // 0x0C
+  30   1              write_LCD_command(CURSOR_RIGHT);// 0x06
+  31   1      }
+  32          void clear_LCD()
+  33          {
+  34   1              write_LCD_command(CLEAR);       
+  35   1              write_LCD_command(CURSOR_HOME); 
+  36   1      }
+  37          void display_LCD_string(char *p)
+  38          {
+  39   1              while(*p)
+  40   1              {
+  41   2                      write_LCD_data(*p);
+  42   2                      p++;
+  43   2              }
+  44   1      }
+  45          void display_LCD_number(char number)
+  46          {
+  47   1              unsigned char x,y;
+  48   1              x=number/10;
+  49   1              y=number-10*x;
+  50   1              write_LCD_data(int2charLCD[x]);
+  51   1              write_LCD_data(int2charLCD[y]);
+  52   1      }
+  53          void gotoxy(unsigned x,unsigned y)
+  54          {
+  55   1              if(x==1)  
+C51 COMPILER V7.50   LCD                                                                   06/13/2014 14:57:58 PAGE 2   
+
+  56   1                      write_LCD_command(GOTO_LINE_1+y);
+  57   1              else
+  58   1              write_LCD_command(GOTO_LINE_2+y);
+  59   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    188    ----
+   CONSTANT SIZE    =     11    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

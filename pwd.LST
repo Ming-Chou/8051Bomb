@@ -1,0 +1,81 @@
+C51 COMPILER V7.50   PWD                                                                   06/10/2014 15:12:17 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE PWD
+OBJECT MODULE PLACED IN pwd.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE pwd.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REG51.h>
+   2          #include "FinalCase.h"
+   3          #include "stdio.h"
+   4          #include "stdlib.h"
+   5          //#include "time.h"
+   6          
+   7          void Ultimate(int p)
+   8          {
+   9   1              int m=0,n=100,b=0;
+  10   1              while(p!=b)
+  11   1              {
+  12   2                      scanf("%d",&b);
+  13   2      
+  14   2                      if(b>p)
+  15   2                      {
+  16   3                              if(b<=n)
+  17   3                              n=b;
+  18   3                              if(m==(p-1) && n==(p+1)) //成功條件 
+  19   3                              {
+  20   4                      aa = 0;
+  21   4                      bb = 200;
+  22   4                              }
+  23   3                  aa = m;
+  24   3                  bb = n;
+  25   3                      }
+  26   2                      else if(b<p)
+  27   2                      {
+  28   3                              if(b>=m)
+  29   3                              m=b;
+  30   3                              if(m==p-1 && n==p+1) //成功條件 
+  31   3                              {
+  32   4                      aa = 0;
+  33   4                      bb = 200;
+  34   4                              }
+  35   3                  aa = m;
+  36   3                  bb = n;
+  37   3                      
+  38   3                      }
+  39   2              }
+  40   1          aa = 0;
+  41   1          bb = 404;   
+  42   1      }
+  43          
+  44          
+  45          
+  46          
+  47          void pwd_start(void)
+  48          {
+  49   1              int a;
+  50   1      //      srand(time(NULL));
+  51   1              a=(rand()%100)+1;
+  52   1      //      printf("%d",a);
+  53   1      //      Ultimate(a);
+  54   1      //      return 0;
+  55   1      }
+C51 COMPILER V7.50   PWD                                                                   06/10/2014 15:12:17 PAGE 2   
+
+  56          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    273    ----
+   CONSTANT SIZE    =      3    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

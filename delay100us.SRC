@@ -1,0 +1,35 @@
+; .\delay100us.SRC generated from: delay100us.c
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.EXE delay100us.c BROWSE DEBUG OBJECTEXTEND SRC(.\delay100us.SRC)
+
+
+NAME	DELAY100US
+
+?PR?_delay100us?DELAY100US               SEGMENT CODE 
+?DT?_delay100us?DELAY100US               SEGMENT DATA OVERLAYABLE 
+	PUBLIC	_delay100us
+
+	RSEG  ?DT?_delay100us?DELAY100US
+?_delay100us?BYTE:
+          n?040:   DS   1
+; void delay100us(unsigned char n)
+
+	RSEG  ?PR?_delay100us?DELAY100US
+_delay100us:
+			; SOURCE LINE # 1
+	MOV  	n?040,R7
+; {
+			; SOURCE LINE # 2
+; #pragma asm
+; more:	mov		R3,#48
+	  more:	mov		R3,#48
+; 		djnz	R3,$
+	  djnz	R3,$
+; 		djnz	R7,more
+	  djnz	R7,more
+; #pragma endasm
+; }			; SOURCE LINE # 8
+	RET  	
+; END OF _delay100us
+
+	END

@@ -1,0 +1,9 @@
+static void timer0_initialize(void);
+
+
+static void timer0_initialize_close(void);
+
+    
+void count (void);
+
+int ctrl(void);

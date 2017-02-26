@@ -1,0 +1,71 @@
+C51 COMPILER V7.50   KEY                                                                   06/13/2014 14:57:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN key.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE key.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REG51.H>
+   2          #include "count.h"
+   3          #include "keypad.h"
+   4          #include "lcd.h"
+   5          
+   6          code seven_seg1[11] = {0XE0, 0XE1, 0XE2, 0XE3, 0XE4, 0XE5, 0XE6, 0XE7, 0XE8, 0XE9, 0x00};
+   7          code seven_seg2[11]     = {0XD0, 0XD1, 0XD2, 0XD3, 0XD4, 0XD5, 0XD6, 0XD7, 0XD8, 0XD9, 0x00};
+   8          code seven_seg3[11]     = {0XB0, 0XB1, 0XB2, 0XB3, 0XB4, 0XB5, 0XB6, 0XB7, 0XB8, 0XB9, 0x00};
+   9          code seven_seg4[11]     = {0X70, 0X71, 0X72, 0X73, 0X74, 0X75, 0X76, 0X77, 0X78, 0X79, 0x00};
+  10          int temp,temp2;
+  11          
+  12          void show(int a, int b, int c, int d)
+  13          {
+  14   1              temp2 = 50;
+  15   1              do
+  16   1              {       
+  17   2                      temp=50;
+  18   2                      while(temp!=0)
+  19   2                      {
+  20   3                              temp--;
+  21   3                              P0=seven_seg1[a];
+  22   3                              P0=seven_seg2[b];
+  23   3                              P0=seven_seg3[c];
+  24   3                              P0=seven_seg4[d];
+  25   3                              
+  26   3                      }
+  27   2                      temp2--;
+  28   2              }while(temp2!=0);
+  29   1      }
+  30          
+  31          void start_key (void)  
+  32          {
+  33   1        show(0,3,0,0);
+  34   1        do{
+  35   2              show(0,3,0,0);
+  36   2              if(gotkey()==3)//¶}©l
+  37   2              {
+  38   3                      //P1=0x80;
+  39   3                      count();
+  40   3                      break;
+  41   3              }
+  42   2              show(0,3,0,0);
+  43   2              P2=0x80;
+  44   2        }while(1);
+  45   1      }
+  46          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    174    ----
+   CONSTANT SIZE    =     88    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       8
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V7.50   KEY                                                                   06/13/2014 14:57:58 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
